@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState({ type: '', message: '' });
+  const [isSending, setIsSending] = useState(false);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -30,6 +37,76 @@ const Portfolio = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus({
+        type: 'error',
+        message: 'Lütfen tüm alanları doldurun.'
+      });
+      return;
+    }
+
+    setIsSending(true);
+    setFormStatus({ type: '', message: '' });
+
+    try {
+      const serviceID = 'service_9xm6qpj'; 
+      const templateID = 'template_72si4al'; 
+      const publicKey = 'K-2__9gKbFkqGR-Im'; 
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: 'basartuna35@gmail.com'
+      };
+
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service_id: serviceID,
+          template_id: templateID,
+          user_id: publicKey,
+          template_params: templateParams
+        })
+      });
+
+      if (response.ok) {
+        setFormStatus({
+          type: 'success',
+          message: 'Mesajınız başarıyla gönderildi! En kısa sürede dönüş yapacağım.'
+        });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error('Email gönderilemedi');
+      }
+    } catch (error) {
+      setFormStatus({
+        type: 'error',
+        message: 'Bir hata oluştu. Lütfen daha sonra tekrar deneyin veya doğrudan mail atın.'
+      });
+    } finally {
+      setIsSending(false);
+      setTimeout(() => {
+        setFormStatus({ type: '', message: '' });
+      }, 5000);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -389,13 +466,33 @@ const Portfolio = () => {
 
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
               <h3 className="text-2xl font-bold text-white mb-6">Send Message</h3>
-              <div className="space-y-6">
+              
+              {formStatus.message && (
+                <div className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${
+                  formStatus.type === 'success' 
+                    ? 'bg-green-500/20 border border-green-500/50 text-green-300' 
+                    : 'bg-red-500/20 border border-red-500/50 text-red-300'
+                }`}>
+                  {formStatus.type === 'success' ? (
+                    <CheckCircle size={20} />
+                  ) : (
+                    <AlertCircle size={20} />
+                  )}
+                  <span>{formStatus.message}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-gray-300 mb-2">Name</label>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-purple-500 transition-colors duration-300"
                     placeholder="Enter name please"
+                    disabled={isSending}
                   />
                 </div>
 
@@ -403,24 +500,46 @@ const Portfolio = () => {
                   <label className="block text-gray-300 mb-2">Email</label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-purple-500 transition-colors duration-300"
                     placeholder="Mail"
+                    disabled={isSending}
                   />
                 </div>
 
                 <div>
                   <label className="block text-gray-300 mb-2">Your message</label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     rows="5"
                     className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-purple-500 transition-colors duration-300 resize-none"
                     placeholder="Message"
+                    disabled={isSending}
                   />
                 </div>
 
-                <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105">
-                  Send
+                <button 
+                  type="submit"
+                  disabled={isSending}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                >
+                  {isSending ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      Gönderiliyor...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={20} />
+                      Send
+                    </>
+                  )}
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
