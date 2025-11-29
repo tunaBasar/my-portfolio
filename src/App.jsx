@@ -191,10 +191,7 @@ const Portfolio = () => {
                 Backend Developer
               </p>
               <p className="text-lg text-gray-400 mb-10 leading-relaxed">
-                I am a final-year Computer Engineering student at Isparta University of Applied Sciences, graduating in 2026. I specialize in backend development with deep expertise in Java (Spring Boot) and .NET Core technologies. With hands-on experience in distributed systems from my internship at i2i Systems working on microservice architectures using Apache Kafka, Hazelcast, Akka, and VoltDB, I bring both academic knowledge and real-world corporate project experience to the table.
-
-                I am passionate about building scalable backend systems, working with modern technologies like Docker, Redis, and PostgreSQL, and following Agile/Scrum methodologies. As a team-oriented engineer with strong communication skills, I thrive in collaborative environments and am eager to contribute to challenging projects in the tech industry.
-              </p>
+                I am a final-year Computer Engineering student at Isparta University of Applied Sciences, graduating in 2026. I specialize in backend development with deep expertise in Java (Spring Boot) and .NET Core technologies. With hands-on experience in distributed systems from my professional background working on microservice architectures using Apache Kafka, Hazelcast, Akka, and VoltDB, I bring both academic knowledge and real-world corporate project experience to the table. I am passionate about building scalable backend systems, working with modern technologies like Docker, Redis, and PostgreSQL, and following Agile/Scrum methodologies. As a team-oriented engineer with strong communication skills, I thrive in collaborative environments and am eager to contribute to challenging projects in the tech industry.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
                   onClick={() => scrollToSection('contact')}
