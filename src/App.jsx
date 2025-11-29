@@ -114,11 +114,9 @@ const Portfolio = () => {
                 Backend Developer
               </p>
               <p className="text-lg text-gray-400 mb-10 leading-relaxed">
-                I am a 4th-year student at Isparta University of Applied Sciences, specializing in software development with a strong foundation in C# and Java. I also possess solid experience in C++.
+                I am a final-year Computer Engineering student at Isparta University of Applied Sciences, graduating in 2026. I specialize in backend development with deep expertise in Java (Spring Boot) and .NET Core technologies. With hands-on experience in distributed systems from my internship at i2i Systems working on microservice architectures using Apache Kafka, Hazelcast, Akka, and VoltDB, I bring both academic knowledge and real-world corporate project experience to the table.
 
-                In addition to my technical expertise, I am passionate about continuous learning and professional growth. I have delivered presentations on significant topics, including insights from "The Pragmatic Programmer" and "Refactoring," which have deepened my understanding of best practices in software development.
-
-                I am eager to apply my skills and knowledge in challenging projects and collaborate with like-minded professionals in the tech industry.
+                I am passionate about building scalable backend systems, working with modern technologies like Docker, Redis, and PostgreSQL, and following Agile/Scrum methodologies. As a team-oriented engineer with strong communication skills, I thrive in collaborative environments and am eager to contribute to challenging projects in the tech industry.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
@@ -209,32 +207,36 @@ const Portfolio = () => {
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
                 <h3 className="text-2xl font-bold text-white mb-4">Who am I?</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Hello, I'm Hilmi Tunahan Başar — a final-year Computer Engineering student at Isparta University of Applied Sciences with a sharp focus on backend development and distributed systems.
+                  Hello, I'm Hilmi Tunahan Başar — a final-year Computer Engineering student at Isparta University of Applied Sciences, graduating in 2026, with a sharp focus on backend development and distributed systems.
 
-                  I specialize in C# and Java, with a solid background in C++ and hands-on experience in building scalable microservices architectures. I've actively worked on various academic and personal projects, including Evrencell, RayLogic, DentistApp, and most recently, a fintech-oriented budget tracking system called Monita, where I implemented technologies like Kafka, Selenium, Docker, Oracle, and VoltDB.
+                  I specialize in Java (Spring Boot) and .NET Core, building scalable microservices architectures and RESTful APIs. During my internship at i2i Systems, I worked on "Evrencell," a distributed Online Charging System (OCS) using Apache Kafka, Hazelcast, Akka, and VoltDB, where I actively participated in live migration processes on German servers and experienced Agile/Scrum methodologies with Jira tracking.
 
-                  Beyond code, I'm passionate about continuous learning. I've delivered in-depth presentations on The Pragmatic Programmer and Refactoring, where I explored real-world software development principles such as clean code, maintainability, and iterative improvement.
+                  Currently, I'm working remotely as a Backend Developer at Tavia, developing a cafe reservation application using Spring Boot microservices, PostgreSQL, Redis, and Docker. I also have expertise in Cloud Computing and Infrastructure Management, including managing physical and virtual servers, AWS services, and system administration tasks.
 
-                  I enjoy translating complex problems into elegant solutions, working collaboratively in agile teams, and keeping my toolbox sharp by exploring modern development trends. Whether it's through .NET MAUI for cross-platform UI or Spring Boot for robust APIs, I strive to build software that's both efficient and meaningful.
+                  Beyond coding, I'm passionate about continuous learning and sharing knowledge. I've delivered in-depth presentations on "The Pragmatic Programmer" and "Refactoring," exploring real-world software development principles such as clean code, maintainability, and iterative improvement.
 
-                  Outside the keyboard? I have a strong curiosity for military strategy and psychological operations — a mindset that sharpens my ability to think tactically and plan long-term, even in the most unpredictable environments.
+                  I thrive in collaborative, agile teams and enjoy translating complex problems into elegant, efficient solutions. Whether it's designing database schemas, optimizing caching strategies, or containerizing applications, I strive to build software that's both robust and meaningful.
 
-                  If you're working on a project that needs a developer who values both craftsmanship and communication, I'd be thrilled to connect.
+                  If you're working on a project that needs a backend developer who values craftsmanship, communication, and continuous growth, I'd be thrilled to connect.
                 </p>
               </div>
 
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                <h3 className="text-2xl font-bold text-white mb-4">Skils</h3>
+                <h3 className="text-2xl font-bold text-white mb-4">Skills</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {[
-                    'C# & .Net',
-                    'JAVA & SpringBoot',
+                    'Java & Spring Boot',
+                    'C# & .NET Core',
+                    'PostgreSQL & MSSQL',
+                    'Redis & MongoDB',
                     'Docker',
                     'Apache Kafka',
-                    'MongoDB & Redis',
+                    'Cloud Computing (AWS)',
+                    'Server Management',
                     'Git & GitHub',
-                    'UI/UX Design',
-                    'SQL'
+                    'DevOps Principles',
+                    'Linux (Ubuntu)',
+                    'Agile/Scrum'
                   ].map((skill, index) => (
                     <div key={index} className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg p-3 text-white text-center border border-purple-500/30">
                       {skill}
@@ -285,17 +287,17 @@ const Portfolio = () => {
                     </a>
                   </div>
 
-                  {/* RayLogic */}
+                  {/* Tavia */}
                   <div className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-                    <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
-                      RL
+                    <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center text-white font-bold">
+                      TV
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold">RayLogic</h4>
-                      <p className="text-gray-400 text-sm">Gerçek zamanlı veri işleme mimarisi (devam ediyor).</p>
+                      <h4 className="text-white font-semibold">Tavia</h4>
+                      <p className="text-gray-400 text-sm">Cafe reservation backend using Spring Boot, Microservices, PostgreSQL, Redis, and Docker.</p>
                     </div>
                     <a
-                      href="https://github.com/tunaBasar/raylogic"
+                      href="https://github.com/tunaBasar/Tavia"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="ml-auto"
@@ -304,23 +306,15 @@ const Portfolio = () => {
                     </a>
                   </div>
 
-                  {/* Monita */}
+                  {/* SoftSim Simulation */}
                   <div className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-                    <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-lg flex items-center justify-center text-white font-bold">
-                      MO
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center text-white font-bold">
+                      SS
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold">Monita</h4>
-                      <p className="text-gray-400 text-sm">Fintech temelli harcama analiz sistemi (yapım aşamasında).</p>
+                      <h4 className="text-white font-semibold">SoftSim Simulation</h4>
+                      <p className="text-gray-400 text-sm">A Full Stack project simulating the Software Development Life Cycle (SDLC), managing SRS documentation and Unit Tests (JUnit).</p>
                     </div>
-                    <a
-                      href="https://github.com/tunaBasar/monita"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-auto"
-                    >
-                      <ExternalLink size={20} className="text-purple-400 hover:text-purple-600 transition-colors duration-200" />
-                    </a>
                   </div>
 
                 </div>
