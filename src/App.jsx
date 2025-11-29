@@ -203,7 +203,7 @@ const Portfolio = () => {
                   Contact
                 </button>
                 <a
-                  href="/HilmiTunahanBasarCV.pdf"
+                  href="/Hilmi_Tunahan_Basar_CV.pdf"
                   download
                   className="border border-purple-400 text-purple-400 px-8 py-3 rounded-full font-medium hover:bg-purple-400 hover:text-white transition-all duration-300 flex items-center justify-center gap-2"
                 >
