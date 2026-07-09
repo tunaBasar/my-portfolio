@@ -1,0 +1,70 @@
+HİLMİ TUNAHAN
+BAŞAR
+BACKEND DEVELOPER
+DENEYİM VE PROJELER
+İLETİŞİM
+Tel: +90 541 458 1131
+Mail: basartuna35@gmail.com
+LinkedIn: linkedin.com/in/tuna-başar
+GitHub: github.com/tunaBasar
+Portfolyo: tunabasar.netlify.app
+
+HAKKIMDA
+Isparta Uygulamalı Bilimler Üniversitesi
+Bilgisayar Mühendisliği son sınıf
+öğrencisiyim. Java (Spring Boot) ve .NET
+teknolojileriyle backend geliştirme üzerine
+yoğunlaştım. İletişimi güçlü, takım ruhuna
+inanan ve sosyal bir mühendis adayıyım.
+Öğrenciyken kurumsal projelerde bulunarak
+dağıtık sistemler ve çevik (Agile) süreçler
+hakkında tecrübe edindim. Mezuniyet öncesi,
+Docker ve modern backend mimarilerini
+içeren projelerde uzaktan (remote) çalışarak
+
+YAZILIM STAJYERİ | i2i Systems (2024)
+Proje: "Evrencell" - Online Charging System (OCS)
+Apache Kafka, Hazelcast, Akka ve VoltDB kullanılan dağıtık
+mimarili projede geliştirme ekibinde yer aldım.
+Almanya sunucularındaki canlı geçiş süreçlerinde aktif rol
+oynadım.
+Agile/Scrum metodolojileri ve Jira takibiyle kurumsal
+yazılım süreçlerini deneyimledim.
+BACKEND GELİŞTİRİCİ | Tavia (2025-Günümüz)
+Kafe rezervasyon uygulamasının backend mimarisini
+Spring Boot ve Mikroservis yapısıyla geliştiriyorum.
+Veri tutarlılığı için PostgreSQL, performans için Redis ve
+konteynerizasyon için Docker kullanıyorum.
+YAZILIM GELİŞTİRİCİ | Kan Bağışı Sistemi (2023)
+.NET Core ile bağışçı ve ihtiyaç sahiplerini eşleştiren
+katmanlı mimariye sahip bir platform tasarladım.
+MSSQL veritabanı tasarımı ve Swagger ile API
+dökümantasyonunu hazırladım.
+FULL STACK | SoftSim Simülasyonu (2025)
+Yazılım yaşam döngüsünü (SDLC) simüle eden projede;
+SRS dökümantasyonu, mimari tasarım ve birim test (JUnit)
+süreçlerini yönettim.
+
+değer üretmek istiyorum.
+
+DİLLER
+
+TEKNİK BECERİLER
+
+İngilizce B1
+
+Diller & Framework: Java, Spring Boot, C# (.NET Core)
+
+EĞİTİM
+
+Veri Tabanı: SQL (PostgreSQL, MSSQL, Oracle), MySQL
+
+Isparta Uygulamalı Bilimler Üni. Bilgisayar
+Mühendisliği 2026
+
+NoSQL & Caching: Redis, MongoDB
+Sistem & DevOps: Docker, Linux (Ubuntu), Git
+Mimari Aşinalığı: Apache Kafka, Hazelcast, Akka, VoltDB
+Araçlar: Jira, Trello, Postman, Swagger
+
+

@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local generated summary
+summary.md
+
+# Environment variables
+.env
+.env.local

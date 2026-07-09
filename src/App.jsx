@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Send, CheckCircle, AlertCircle, Globe } from 'lucide-react';
+import { translations } from './locales.js';
 
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [lang, setLang] = useState('en');
+  
+  const t = translations[lang];
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,9 +25,13 @@ const Portfolio = () => {
     setIsMenuOpen(false);
   };
 
+  const toggleLang = () => {
+    setLang(lang === 'en' ? 'tr' : 'en');
+  };
+
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'contact'];
+      const sections = ['home', 'about', 'experience', 'projects', 'skills', 'contact'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -46,88 +55,72 @@ const Portfolio = () => {
     }));
   };
 
+  const encode = (data) => {
+    const params = new URLSearchParams();
+    for (const key in data) {
+      params.append(key, data[key]);
+    }
+    return params.toString();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validation
     if (!formData.name || !formData.email || !formData.message) {
       setFormStatus({
         type: 'error',
-        message: 'Lütfen tüm alanları doldurun.'
+        message: t.contact.emptyFields
       });
       return;
     }
-
     setIsSending(true);
     setFormStatus({ type: '', message: '' });
 
     try {
-      const serviceID = 'service_9xm6qpj'; 
-      const templateID = 'template_72si4al'; 
-      const publicKey = 'K-2__9gKbFkqGR-Im'; 
-
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        message: formData.message,
-        to_email: 'basartuna35@gmail.com'
-      };
-
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          service_id: serviceID,
-          template_id: templateID,
-          user_id: publicKey,
-          template_params: templateParams
-        })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({ 'form-name': 'contact', ...formData })
       });
 
       if (response.ok) {
-        setFormStatus({
-          type: 'success',
-          message: 'Mesajınız başarıyla gönderildi! En kısa sürede dönüş yapacağım.'
-        });
+        setFormStatus({ type: 'success', message: t.contact.success });
         setFormData({ name: '', email: '', message: '' });
       } else {
-        throw new Error('Email gönderilemedi');
+        throw new Error('Form submission failed');
       }
     } catch (error) {
-      setFormStatus({
-        type: 'error',
-        message: 'Bir hata oluştu. Lütfen daha sonra tekrar deneyin veya doğrudan mail atın.'
-      });
+      setFormStatus({ type: 'error', message: t.contact.error });
     } finally {
       setIsSending(false);
-      setTimeout(() => {
-        setFormStatus({ type: '', message: '' });
-      }, 5000);
+      setTimeout(() => setFormStatus({ type: '', message: '' }), 5000);
     }
   };
 
+  const navItems = [
+    { id: 'home', label: t.nav.home },
+    { id: 'about', label: t.nav.about },
+    { id: 'experience', label: t.nav.experience },
+    { id: 'projects', label: t.nav.projects },
+    { id: 'skills', label: t.nav.skills },
+    { id: 'contact', label: t.nav.contact }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-x-hidden">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0">
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent cursor-pointer" onClick={() => scrollToSection('home')}>
                 Tunahan BAŞAR
               </span>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                {[
-                  { id: 'home', label: 'Home' },
-                  { id: 'about', label: 'About Me' },
-                  { id: 'contact', label: 'Contact Me' }
-                ].map((item) => (
+            <div className="hidden md:flex items-center space-x-4">
+              <div className="flex items-baseline space-x-6">
+                {navItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
@@ -140,10 +133,24 @@ const Portfolio = () => {
                   </button>
                 ))}
               </div>
+              <button 
+                onClick={toggleLang}
+                className="ml-4 flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-full transition-colors border border-gray-600"
+              >
+                <Globe size={16} />
+                <span className="text-sm font-semibold">{lang.toUpperCase()}</span>
+              </button>
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="md:hidden flex items-center gap-4">
+              <button 
+                onClick={toggleLang}
+                className="flex items-center gap-2 bg-gray-800 text-white px-3 py-1.5 rounded-full border border-gray-600"
+              >
+                <Globe size={16} />
+                <span className="text-sm font-semibold">{lang.toUpperCase()}</span>
+              </button>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-400 hover:text-white p-2"
@@ -156,13 +163,9 @@ const Portfolio = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-black/40 backdrop-blur-lg">
+          <div className="md:hidden bg-black/40 backdrop-blur-lg border-b border-white/10">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {[
-                { id: 'home', label: 'Home' },
-                { id: 'about', label: 'About Me' },
-                { id: 'contact', label: 'Contact Me' }
-              ].map((item) => (
+              {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
@@ -176,28 +179,31 @@ const Portfolio = () => {
         )}
       </nav>
 
+      {/* Main Content */}
+      
       {/* Home Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
+            <div className="text-center lg:text-left z-10">
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-                Hi, I'm
+                {t.hero.greeting}
                 <span className="block bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Tuna
+                  {t.hero.name}
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl text-gray-300 mb-8">
-                Backend Developer
+              <p className="text-xl md:text-2xl text-gray-300 mb-8 font-medium">
+                {t.hero.title}
               </p>
-              <p className="text-lg text-gray-400 mb-10 leading-relaxed">
-                I am a final-year Computer Engineering student at Isparta University of Applied Sciences, graduating in 2026. I specialize in backend development with deep expertise in Java (Spring Boot) and .NET Core technologies. With hands-on experience in distributed systems from my professional background working on microservice architectures using Apache Kafka, Hazelcast, Akka, and VoltDB, I bring both academic knowledge and real-world corporate project experience to the table. I am passionate about building scalable backend systems, working with modern technologies like Docker, Redis, and PostgreSQL, and following Agile/Scrum methodologies. As a team-oriented engineer with strong communication skills, I thrive in collaborative environments and am eager to contribute to challenging projects in the tech industry.</p>
+              <p className="text-lg text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                {t.hero.description}
+              </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
                   onClick={() => scrollToSection('contact')}
                   className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105"
                 >
-                  Contact
+                  {t.hero.contactBtn}
                 </button>
                 <a
                   href="/Hilmi_Tunahan_Basar_CV.pdf"
@@ -205,23 +211,21 @@ const Portfolio = () => {
                   className="border border-purple-400 text-purple-400 px-8 py-3 rounded-full font-medium hover:bg-purple-400 hover:text-white transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <Download size={20} />
-                  CV Download
+                  {t.hero.cvBtn}
                 </a>
-
               </div>
             </div>
 
-            <div className="flex justify-center lg:justify-end">
+            <div className="flex justify-center lg:justify-end z-10">
               <div className="relative">
-                {/* PROFİL FOTOĞRAFI */}
-                <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-purple-400 shadow-2xl">
+                <div className="w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-purple-400 shadow-2xl relative z-10 bg-gray-800">
                   <img
                     src="/images/PP.jpg"
                     alt="Tunahan Başar"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute -z-10 w-80 h-80 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full blur-xl opacity-50 animate-pulse"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 md:w-96 md:h-96 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full blur-2xl opacity-50 animate-pulse"></div>
               </div>
             </div>
           </div>
@@ -229,171 +233,157 @@ const Portfolio = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="min-h-screen flex items-center py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="about" className="min-h-screen flex items-center py-20 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              About me
+              {t.about.title}
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              I combine technology and imagination to create impactful solutions in the digital world.
+              {t.about.subtitle}
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <div className="space-y-6">
-              {/* ÇALIŞMA ALANI FOTOĞRAFI */}
-              <div className="rounded-2xl overflow-hidden border border-gray-700 shadow-2xl">
-                <img
-                  src="/images/bir.jpg"
-                  alt="Çalışma Alanım"
-                  className="w-full h-80 object-cover"
-                />
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+              <div className="col-span-2 md:col-span-3 rounded-2xl overflow-hidden border border-gray-700 shadow-xl">
+                <img src="/images/bir.jpg" alt="Setup" className="w-full h-40 md:h-56 object-cover" />
               </div>
-
-              {/* PROJE FOTOĞRAFI */}
-              <div className="rounded-2xl overflow-hidden border border-purple-700 shadow-2xl">
-                <img
-                  src="/images/iki.jpg"
-                  alt="Projelerim"
-                  className="w-full h-80 object-cover"
-                />
+              <div className="col-span-2 md:col-span-3 rounded-2xl overflow-hidden border border-purple-700 shadow-xl md:mt-6">
+                <img src="/images/iki.jpg" alt="Projects" className="w-full h-40 md:h-56 object-cover" />
               </div>
-
-              {/* TEKNOLOJİ FOTOĞRAFI */}
-              <div className="rounded-2xl overflow-hidden border border-blue-700 shadow-2xl">
-                <img
-                  src="/images/uc.jpg"
-                  alt="Teknoloji"
-                  className="w-full h-80 object-cover"
-                />
+              <div className="col-span-1 md:col-span-2 rounded-2xl overflow-hidden border border-blue-700 shadow-xl">
+                <img src="/images/uc.jpg" alt="Tech" className="w-full h-40 md:h-56 object-cover" />
               </div>
-              <div className="rounded-2xl overflow-hidden border border-blue-700 shadow-2xl">
-                <img
-                  src="/images/dort.jpg"
-                  alt="Teknoloji"
-                  className="w-full h-80 object-cover"
-                />
+              <div className="col-span-1 md:col-span-2 rounded-2xl overflow-hidden border border-pink-700 shadow-xl md:mt-4">
+                <img src="/images/dort.jpg" alt="Code" className="w-full h-40 md:h-56 object-cover" />
+              </div>
+              <div className="col-span-2 md:col-span-2 rounded-2xl overflow-hidden border border-green-500 shadow-xl md:-mt-2">
+                <img src="/images/resim.jpeg" alt="Extra" className="w-full h-48 md:h-64 object-cover object-center" />
               </div>
             </div>
 
-            <div className="space-y-8">
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                <h3 className="text-2xl font-bold text-white mb-4">Who am I?</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Hello, I'm Hilmi Tunahan Başar — a final-year Computer Engineering student at Isparta University of Applied Sciences, graduating in 2026, with a sharp focus on backend development and distributed systems.
-
-                  I specialize in Java (Spring Boot) and .NET Core, building scalable microservices architectures and RESTful APIs. During my internship at i2i Systems, I worked on "Evrencell," a distributed Online Charging System (OCS) using Apache Kafka, Hazelcast, Akka, and VoltDB, where I actively participated in live migration processes on German servers and experienced Agile/Scrum methodologies with Jira tracking.
-
-                  Currently, I'm working remotely as a Backend Developer at Tavia, developing a cafe reservation application using Spring Boot microservices, PostgreSQL, Redis, and Docker. I also have expertise in Cloud Computing and Infrastructure Management, including managing physical and virtual servers, AWS services, and system administration tasks.
-
-                  Beyond coding, I'm passionate about continuous learning and sharing knowledge. I've delivered in-depth presentations on "The Pragmatic Programmer" and "Refactoring," exploring real-world software development principles such as clean code, maintainability, and iterative improvement.
-
-                  I thrive in collaborative, agile teams and enjoy translating complex problems into elegant, efficient solutions. Whether it's designing database schemas, optimizing caching strategies, or containerizing applications, I strive to build software that's both robust and meaningful.
-
-                  If you're working on a project that needs a backend developer who values craftsmanship, communication, and continuous growth, I'd be thrilled to connect.
-                </p>
+            <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 shadow-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-4">{t.about.whoAmI}</h3>
+              <div className="space-y-6 text-gray-300 leading-relaxed">
+                <p>{t.about.p1}</p>
+                <p>{t.about.p2}</p>
+                <p>{t.about.p3}</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                <h3 className="text-2xl font-bold text-white mb-4">Skills</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    'Java & Spring Boot',
-                    'C# & .NET Core',
-                    'PostgreSQL & MSSQL',
-                    'Redis & MongoDB',
-                    'Docker',
-                    'Apache Kafka',
-                    'Cloud Computing (AWS)',
-                    'Server Management',
-                    'Git & GitHub',
-                    'DevOps Principles',
-                    'Linux (Ubuntu)',
-                    'Agile/Scrum'
-                  ].map((skill, index) => (
-                    <div key={index} className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg p-3 text-white text-center border border-purple-500/30">
-                      {skill}
-                    </div>
+      {/* Experience Section */}
+      <section id="experience" className="min-h-screen flex items-center py-20 bg-black/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              {t.experience.title}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              {t.experience.subtitle}
+            </p>
+          </div>
+
+          <div className="space-y-8 max-w-4xl mx-auto">
+            {t.experience.roles.map((role) => (
+              <div key={role.id} className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 transition-transform hover:-translate-y-1 duration-300">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white">{role.title}</h3>
+                    <p className="text-lg text-purple-400 font-medium">{role.company}</p>
+                  </div>
+                  <span className="inline-block mt-2 md:mt-0 bg-white/10 px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 border border-white/5">
+                    {role.date}
+                  </span>
+                </div>
+                <p className="text-gray-300 italic mb-6 border-l-2 border-purple-500 pl-4">{role.description}</p>
+                <ul className="space-y-4">
+                  {role.points.map((point, idx) => {
+                    const [bold, rest] = point.split(': ');
+                    return (
+                      <li key={idx} className="flex gap-3 text-gray-400">
+                        <span className="text-purple-500 mt-1">✦</span>
+                        <span>
+                          {rest ? <><strong className="text-gray-200">{bold}:</strong> {rest}</> : point}
+                        </span>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="min-h-screen flex items-center py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              {t.projects.title}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              {t.projects.subtitle}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {t.projects.items.map((proj, idx) => (
+              <div key={idx} className="group bg-gray-800/40 border border-gray-700/50 rounded-2xl p-8 hover:bg-gray-800/60 hover:border-purple-500/50 transition-all duration-300">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">{proj.name}</h3>
+                    <span className="text-xs font-semibold tracking-wider uppercase text-pink-400 mt-1 block">{proj.type}</span>
+                  </div>
+                  <a href={proj.url} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors text-gray-400 hover:text-white">
+                    <ExternalLink size={20} />
+                  </a>
+                </div>
+                <p className="text-gray-200 font-medium mb-4">{proj.desc}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{proj.details}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="min-h-screen flex items-center py-20 bg-black/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              {t.skills.title}
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              {t.skills.subtitle}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {t.skills.categories.map((cat, idx) => (
+              <div key={idx} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-sm">✓</span>
+                  {cat.name}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {cat.items.map((item, i) => (
+                    <span key={i} className="bg-gray-800/80 text-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-700">
+                      {item}
+                    </span>
                   ))}
                 </div>
               </div>
-
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                <h3 className="text-2xl font-bold text-white mb-4">Projects</h3>
-                <div className="space-y-4">
-
-                  {/* Evrencell */}
-                  <div className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-                    <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
-                      EV
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold">Evrencell</h4>
-                      <p className="text-gray-400 text-sm">Staj döneminde geliştirilen mikroservis tabanlı telekom projesi.</p>
-                    </div>
-                    <a
-                      href="https://github.com/tunaBasar/evrencell"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-auto"
-                    >
-                      <ExternalLink size={20} className="text-purple-400 hover:text-purple-600 transition-colors duration-200" />
-                    </a>
-                  </div>
-
-                  {/* BloodDonationApp */}
-                  <div className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-                    <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-lg flex items-center justify-center text-white font-bold">
-                      BD
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold">BloodDonationApp</h4>
-                      <p className="text-gray-400 text-sm">Kan bağışı yönetimi için .NET MAUI ve C# ile geliştirilen mobil uygulama.</p>
-                    </div>
-                    <a
-                      href="https://github.com/tunaBasar/BloodDonationApp"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-auto"
-                    >
-                      <ExternalLink size={20} className="text-purple-400 hover:text-purple-600 transition-colors duration-200" />
-                    </a>
-                  </div>
-
-                  {/* Tavia */}
-                  <div className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-                    <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center text-white font-bold">
-                      TV
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold">Tavia</h4>
-                      <p className="text-gray-400 text-sm">Cafe reservation backend using Spring Boot, Microservices, PostgreSQL, Redis, and Docker.</p>
-                    </div>
-                    <a
-                      href="https://github.com/tunaBasar/Tavia"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-auto"
-                    >
-                      <ExternalLink size={20} className="text-purple-400 hover:text-purple-600 transition-colors duration-200" />
-                    </a>
-                  </div>
-
-                  {/* SoftSim Simulation */}
-                  <div className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center text-white font-bold">
-                      SS
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold">SoftSim Simulation</h4>
-                      <p className="text-gray-400 text-sm">A Full Stack project simulating the Software Development Life Cycle (SDLC), managing SRS documentation and Unit Tests (JUnit).</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
+            ))}
+            <div className="bg-gradient-to-br from-purple-900/40 to-pink-900/40 border border-purple-500/30 rounded-2xl p-6 md:col-span-2 lg:col-span-1">
+              <h3 className="text-xl font-bold text-white mb-4">Infrastructure / DevOps</h3>
+              <p className="text-sm text-gray-300 leading-relaxed">
+                {t.skills.devopsDesc}
+              </p>
             </div>
           </div>
         </div>
@@ -401,139 +391,119 @@ const Portfolio = () => {
 
       {/* Contact Section */}
       <section id="contact" className="min-h-screen flex items-center py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Contact me
+              {t.contact.title}
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              If you'd like to collaborate on a project or simply say hello, feel free to get in touch!
+              {t.contact.subtitle}
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="space-y-8">
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-                      <Mail size={20} className="text-white" />
+              <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
+                <h3 className="text-2xl font-bold text-white mb-8">{t.contact.info}</h3>
+                <div className="space-y-6">
+                  <div className="flex items-center gap-6">
+                    <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">
+                      <Mail size={24} className="text-white" />
                     </div>
                     <div>
-                      <p className="text-gray-400">Email</p>
-                      <p className="text-white">basartuna35@gmail.com</p>
+                      <p className="text-gray-400 text-sm mb-1">{t.contact.email}</p>
+                      <a href="mailto:basartuna35@gmail.com" className="text-white text-lg font-medium hover:text-purple-400 transition-colors">basartuna35@gmail.com</a>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-                      <Phone size={20} className="text-white" />
+                  <div className="flex items-center gap-6">
+                    <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3">
+                      <Phone size={24} className="text-white" />
                     </div>
                     <div>
-                      <p className="text-gray-400">Phone Number</p>
-                      <p className="text-white">+90 541 458 1131</p>
+                      <p className="text-gray-400 text-sm mb-1">Phone</p>
+                      <a href="tel:+905414581131" className="text-white text-lg font-medium hover:text-purple-400 transition-colors">+90 541 458 1131</a>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center">
-                      <MapPin size={20} className="text-white" />
+                  <div className="flex items-center gap-6">
+                    <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">
+                      <MapPin size={24} className="text-white" />
                     </div>
                     <div>
-                      <p className="text-gray-400">Location</p>
-                      <p className="text-white">Izmir, Türkiye</p>
+                      <p className="text-gray-400 text-sm mb-1">Location</p>
+                      <p className="text-white text-lg font-medium">Izmir, Türkiye</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex gap-4 mt-8">
-                  <a href="https://github.com/tunaBasar" className="w-12 h-12 bg-gray-800 hover:bg-purple-600 rounded-full flex items-center justify-center transition-colors duration-300">
+                <div className="flex gap-4 mt-10 pt-8 border-t border-white/10">
+                  <a href="https://github.com/tunaBasar" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gray-800 hover:bg-purple-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
                     <Github size={20} className="text-white" />
                   </a>
-                  <a href="https://www.linkedin.com/in/tuna-ba%C5%9Far/" className="w-12 h-12 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors duration-300">
+                  <a href="https://www.linkedin.com/in/tuna-ba%C5%9Far/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
                     <Linkedin size={20} className="text-white" />
-                  </a>
-                  <a href="basartuna35@gmail.com" className="w-12 h-12 bg-gray-800 hover:bg-purple-600 rounded-full flex items-center justify-center transition-colors duration-300">
-                    <Mail size={20} className="text-white" />
                   </a>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-              <h3 className="text-2xl font-bold text-white mb-6">Send Message</h3>
+            <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
+              <h3 className="text-2xl font-bold text-white mb-8">{t.contact.sendMessage}</h3>
               
               {formStatus.message && (
-                <div className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${
+                <div className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
                   formStatus.type === 'success' 
                     ? 'bg-green-500/20 border border-green-500/50 text-green-300' 
                     : 'bg-red-500/20 border border-red-500/50 text-red-300'
                 }`}>
-                  {formStatus.type === 'success' ? (
-                    <CheckCircle size={20} />
-                  ) : (
-                    <AlertCircle size={20} />
-                  )}
-                  <span>{formStatus.message}</span>
+                  {formStatus.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
+                  <span className="font-medium">{formStatus.message}</span>
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form name="contact" data-netlify="true" netlify-honeypot="bot-field" onSubmit={handleSubmit} className="space-y-6">
+                <input type="hidden" name="form-name" value="contact" />
+                <p className="hidden">
+                  <label>
+                    Don’t fill this out if you're human: <input name="bot-field" />
+                  </label>
+                </p>
                 <div>
-                  <label className="block text-gray-300 mb-2">Name</label>
+                  <label className="block text-gray-300 mb-2 text-sm font-medium">{t.contact.name}</label>
                   <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-purple-500 transition-colors duration-300"
-                    placeholder="Enter name please"
-                    disabled={isSending}
+                    type="text" name="name" value={formData.name} onChange={handleInputChange}
+                    className="w-full px-4 py-3.5 bg-gray-900/50 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-300"
+                    placeholder={t.contact.namePlaceholder} disabled={isSending}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 mb-2">Email</label>
+                  <label className="block text-gray-300 mb-2 text-sm font-medium">{t.contact.email}</label>
                   <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-purple-500 transition-colors duration-300"
-                    placeholder="Mail"
-                    disabled={isSending}
+                    type="email" name="email" value={formData.email} onChange={handleInputChange}
+                    className="w-full px-4 py-3.5 bg-gray-900/50 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-300"
+                    placeholder={t.contact.emailPlaceholder} disabled={isSending}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 mb-2">Your message</label>
+                  <label className="block text-gray-300 mb-2 text-sm font-medium">{t.contact.message}</label>
                   <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows="5"
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-purple-500 transition-colors duration-300 resize-none"
-                    placeholder="Message"
-                    disabled={isSending}
+                    name="message" value={formData.message} onChange={handleInputChange} rows="4"
+                    className="w-full px-4 py-3.5 bg-gray-900/50 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-300 resize-none"
+                    placeholder={t.contact.messagePlaceholder} disabled={isSending}
                   />
                 </div>
 
                 <button 
-                  type="submit"
-                  disabled={isSending}
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                  type="submit" disabled={isSending}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-3"
                 >
                   {isSending ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      Gönderiliyor...
-                    </>
+                    <><div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>{t.contact.sending}</>
                   ) : (
-                    <>
-                      <Send size={20} />
-                      Send
-                    </>
+                    <><Send size={20} />{t.contact.sendBtn}</>
                   )}
                 </button>
               </form>
@@ -543,10 +513,10 @@ const Portfolio = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black/40 backdrop-blur-sm border-t border-white/10 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-400">
-            © 2025 [Hilmi Tunahan Başar]. Tüm hakları saklıdır.
+      <footer className="bg-black/40 backdrop-blur-md border-t border-white/10 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+          <p className="text-gray-400 font-medium">
+            {t.footer}
           </p>
         </div>
       </footer>
