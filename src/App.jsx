@@ -340,9 +340,11 @@ const Portfolio = () => {
                     <h3 className="text-2xl font-bold text-black group-hover:text-zinc-600 transition-colors">{proj.name}</h3>
                     <span className="text-xs font-bold tracking-wider uppercase text-zinc-500 mt-1 block">{proj.type}</span>
                   </div>
-                  <a href={proj.url} target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-100 rounded-full hover:bg-black transition-colors text-zinc-600 hover:text-white">
-                    <ExternalLink size={20} />
-                  </a>
+                  {proj.url && (
+                    <a href={proj.url} target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-100 rounded-full hover:bg-black transition-colors text-zinc-600 hover:text-white">
+                      <ExternalLink size={20} />
+                    </a>
+                  )}
                 </div>
                 <p className="text-zinc-800 font-medium mb-4">{proj.desc}</p>
                 <p className="text-zinc-600 text-sm leading-relaxed">{proj.details}</p>
@@ -381,9 +383,9 @@ const Portfolio = () => {
               </div>
             ))}
             <div className="bg-zinc-100 border border-zinc-200 rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-              <h3 className="text-xl font-bold text-black mb-4">Infrastructure / DevOps</h3>
+              <h3 className="text-xl font-bold text-black mb-4">{t.skills.extraTitle}</h3>
               <p className="text-sm text-zinc-600 leading-relaxed">
-                {t.skills.devopsDesc}
+                {t.skills.extraDesc}
               </p>
             </div>
           </div>

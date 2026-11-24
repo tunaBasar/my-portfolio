@@ -11,113 +11,121 @@ export const translations = {
     hero: {
       greeting: "Hi, I'm",
       name: "Tuna",
-      title: "Backend & Distributed Systems Engineer",
-      description: "Computer Engineering candidate (2026) specializing in highly scalable microservices, advanced game development, and modern DevOps pipelines. Passionate about clean code and the pragmatic programmer philosophy.",
+      title: "Backend Developer",
+      description: "Final-year Computer Engineering student at Isparta University of Applied Sciences, graduating in February 2027. I mostly write backend code in Java and Spring Boot, and I'm currently an engineering intern at ErgoSafePartner.",
       contactBtn: "Contact",
       cvBtn: "CV Download"
     },
     about: {
       title: "About Me",
-      subtitle: "Bridging pragmatic engineering with complex system architecture.",
-      whoAmI: "Executive Overview & Philosophy",
-      p1: "As a highly driven Computer Engineering candidate at Isparta University of Applied Sciences (2026), I specialize in Backend Development, Distributed Systems, and Microservices Architecture. Embodying a 'Pragmatic Programmer' mindset, I focus on clean code, test-driven development (TDD), and robust CI/CD pipelines to build scalable, mission-critical solutions.",
-      p2: "My corporate experience at i2i Systems involved engineering Evrencell—an ultra-low-latency, distributed Online Charging System. Utilizing Akka's Actor model, VoltDB, and Kafka, I helped architect high-throughput telecom infrastructure and executed zero-downtime live migrations on production servers. Additionally, I am currently developing Tavia, a microservices-based reservation system orchestrating Spring Boot, PostgreSQL, Redis, and Docker.",
-      p3: "Beyond backend systems, my expertise extends to AI and simulation technologies. A prime example is 'Starling', my thesis project featuring an autonomous drone swarm in Webots R2025a. By integrating YOLOv8 computer vision and dynamic K-Means partitioning, the drones perform real-time forest fire detection. This multidisciplinary approach allows me to adapt and deliver robust engineering solutions across diverse technical domains."
+      subtitle: "A short introduction.",
+      whoAmI: "Who I am",
+      p1: "I'm a final-year Computer Engineering student at Isparta University of Applied Sciences and I'll graduate in February 2027. Most of my work is on the backend: Java and Spring Boot, plus Go and C#/.NET when a project needs them. I live in İzmir and I'm open to remote work.",
+      p2: "Right now I'm an engineering intern at ErgoSafePartner, where I'm the main developer of the web platform for ErgoSafe, an industrial forklift safety system. Before that I spent a summer at i2i Systems, building the customer self-service web app for Evrencell, a telecom online charging system made by an intern team.",
+      p3: "Outside of internships I'm building Tavia, a café SaaS platform with a Spring Boot microservice backend, and Starling, my graduation project: a drone swarm in Webots that searches for wildfires. With two teammates I also took third place at SolveX AI Hackathon 2026 with MedicoPilot, an AI-assisted radiology assistant."
     },
     experience: {
       title: "Experience",
-      subtitle: "Professional roles and corporate milestones.",
+      subtitle: "Internships so far.",
       roles: [
         {
-          id: "tavia",
-          title: "Remote Backend Developer",
-          company: "Tavia",
-          date: "2025 - Present",
-          description: "Architecting a highly scalable cafe and restaurant reservation backend.",
+          id: "ergosafe",
+          title: "Engineering Intern",
+          company: "ErgoSafePartner",
+          date: "Sep 2026 – Dec 2026",
+          description: "Main developer of the web platform for ErgoSafe, an industrial forklift safety system.",
           points: [
-            "Service Orchestration: Built on Spring Boot, the application is broken down into loosely coupled microservices (User Management, Reservation Management, Notification Service). Each service is containerized using Docker for environment consistency.",
-            "Data Layer Strategies: Strategically utilized PostgreSQL for persistent relational data and Redis as an ephemeral caching layer for high-frequency read operations (e.g., checking table availability), drastically minimizing response times.",
-            "Event-Driven Architecture: Integrated Apache Kafka to manage asynchronous communication. When a reservation is confirmed, an event is published to a Kafka topic and consumed by the Notification Service for SMS/Email alerts, preventing bottlenecks and enhancing system resilience."
+            "Built the Go (Fiber) backend and Next.js frontend that turn data from a third-party device server into live video, GPS/RTLS tracking, DMS/ADAS alerts and more than 12 report pages.",
+            "Found and reported a critical session-management vulnerability, fixed unauthorized data-access issues, and added Redis-based rate limiting, IP restrictions, secret rotation and multi-factor authentication.",
+            "Writing a new Java 21 / Spring Boot 4 backend to remove a dependency on third-party software. Also built a one-command installer for customer servers and a GitHub Actions CI/CD pipeline.",
+            "Prepared training data in CVAT for a YOLOX forklift/person detection model (re-annotated about 500 images) and tested local LLMs on the company GPU server."
           ]
         },
         {
           id: "i2i",
           title: "Software Engineering Intern",
           company: "i2i Systems",
-          date: "2024",
-          description: "Developed and maintained Evrencell, a mission-critical, highly distributed Online Charging System (OCS) for the telecommunications sector.",
+          date: "Jul 2024 – Aug 2024",
+          description: "Summer internship on Evrencell, a telecom online charging system built by a 17-person intern team.",
           points: [
-            "Architecture & Technologies: Processed millions of transactions in real-time with ultra-low latency using Akka (Actor model for concurrent, fault-tolerant processing) and VoltDB (in-memory relational database optimized for high velocity).",
-            "Message Brokering & Caching: Decoupled microservices via Apache Kafka as the central event-streaming backbone. Integrated Hazelcast for distributed in-memory caching to reduce database load and accelerate session data retrieval.",
-            "Corporate Agility: Participated in a live migration process on German production servers, monitoring real-time traffic and ensuring zero-downtime deployment strategies. Operated within strict Agile/Scrum and Jira tracking."
+            "Built the customer self-service web app and connected the login, sign-up, password reset and balance screens to the team's REST API (Spring Boot, JavaScript).",
+            "Prepared the project's SRS document together with a teammate.",
+            "Did hands-on assignments on Kafka, VoltDB, Hazelcast, Apache Ignite, Akka, Oracle, Log4j and Swagger."
           ]
         }
       ]
     },
     projects: {
       title: "Projects",
-      subtitle: "Technical ventures spanning game dev, full-stack, and machine learning.",
+      subtitle: "Things I've built outside of internships.",
       items: [
         {
+          name: "MedicoPilot",
+          type: "Hackathon · 3rd place",
+          desc: "AI-assisted radiology assistant, SolveX AI Hackathon 2026 (team of 3).",
+          details: "A two-agent maker-checker setup with mandatory physician approval: Gemma 4 drafts the MRI report and Llama 3.3 70B reviews it for safety. Spring Boot, a Python AI worker, Kafka, Redis, MongoDB and React, run with Docker Compose.",
+          url: "https://github.com/tunaBasar/MedicoPilot"
+        },
+        {
+          name: "Tavia",
+          type: "Microservices · Java / Spring",
+          desc: "Multi-tenant SaaS platform for cafés.",
+          details: "12 services built with Java 21, Spring Boot 4 and Spring Cloud (gateway, discovery, config). Services talk over Kafka and use PostgreSQL and Redis. It also has a Gemini-based customer assistant, IoT machine control, a Next.js dashboard and an Expo mobile app."
+        },
+        {
           name: "Starling",
-          type: "AI & Simulation (Python, YOLOv8, Webots)",
-          desc: "Drone-Based Autonomous Forest Fire Detection",
-          details: "A Webots R2025a simulation featuring a fleet of DJI drones that autonomously patrol forested terrain to detect wildfires using YOLOv8. Implements dynamic K-Means partitioning, real-time Ground Control Station (GCS) telemetry, and Additive Disturbance Flight Models for robust swarm navigation.",
+          type: "Graduation project · Python, Webots",
+          desc: "Autonomous wildfire-detection drone swarm.",
+          details: "A 6-drone fleet in Webots. Patrol zones are split with dynamic K-Means, fire and smoke are detected with YOLOv8 in a separate process, and a backup drone takes off automatically if one crashes.",
           url: "https://github.com/tunaBasar/Starling"
         },
         {
           name: "BloodDonationApp",
-          type: "Mobile & Backend",
-          desc: "A comprehensive, layered architecture platform for blood donation using C# and .NET Core.",
-          details: "Built with .NET MAUI for cross-platform mobile support. Structured an MSSQL database using Entity Framework Core (Code-First) and established robust API documentation using Swagger (OpenAPI) to streamline front-end integration.",
+          type: "Mobile & backend · C# / .NET",
+          desc: "Blood donation app, built solo.",
+          details: "ASP.NET Core API with an MSSQL database (Entity Framework Core, code-first), a .NET MAUI mobile app, and Swagger documentation for the API.",
           url: "https://github.com/tunaBasar/BloodDonationApp"
         },
         {
           name: "MigrAI",
-          type: "Machine Learning",
-          desc: "Predictive AI application for mapping apex predator migration paths.",
-          details: "Built in Python utilizing machine learning algorithms and geographical data to map and predict the movement patterns of various apex predators.",
+          type: "Machine learning · Python",
+          desc: "Predicting migration routes of apex predators.",
+          details: "A CNN + LSTM model trained on geographic data to predict how apex predators move.",
           url: "https://github.com/tunaBasar/MigrAI"
-        },
-        {
-          name: "MedicoPilot",
-          type: "Hackathon Prototype",
-          desc: "Rapid-prototyped healthcare solution for Solvex AI 2026.",
-          details: "Delivering functioning healthcare software under intense time constraints during a competitive hackathon setting.",
-          url: "https://github.com/tunaBasar/MedicoPilot"
         }
       ]
     },
     skills: {
       title: "Skills",
-      subtitle: "Technical competencies across various domains.",
+      subtitle: "What I work with.",
       categories: [
         {
-          name: "Backend & Microservices",
-          items: ["Java", "Spring Boot", "C#", ".NET Core", "Microservices Architecture"]
+          name: "Languages",
+          items: ["Java", "Go", "C#", "Python", "TypeScript / JavaScript", "SQL"]
         },
         {
-          name: "Databases & Caching",
-          items: ["PostgreSQL", "MSSQL", "Oracle", "MySQL", "Redis", "MongoDB"]
+          name: "Backend & Web",
+          items: ["Spring Boot", "Spring Cloud", "Go / Fiber", "ASP.NET Core", "FastAPI", "Next.js / React", "REST", "JUnit", "Testcontainers"]
         },
         {
-          name: "Message Brokers & Grids",
-          items: ["Apache Kafka", "Hazelcast", "Akka", "VoltDB"]
+          name: "Data & Messaging",
+          items: ["PostgreSQL", "MySQL", "Redis", "MongoDB", "Oracle", "Apache Kafka", "Flyway"]
         },
         {
-          name: "Game Development",
-          items: ["C++", "Unity", "OOP Design Patterns"]
+          name: "AI",
+          items: ["LangChain", "LLM APIs (Gemini, Claude)", "Local LLMs", "YOLOv8 / YOLOX", "CVAT"]
         },
         {
-          name: "DevOps & Infrastructure",
-          items: ["Docker", "Linux (Ubuntu)", "Git", "Jira", "CI/CD (Netlify)", "Shell Scripting"]
+          name: "Tools",
+          items: ["Docker", "GitHub Actions", "Git", "Linux"]
         }
       ],
-      devopsDesc: "DevOps Capabilities: Proficient in writing optimized Dockerfiles with multi-stage builds and utilizing docker-compose for multi-container orchestration. Highly capable in Linux (Ubuntu) systems administration, SSH, and setting up automated CI/CD deployment pipelines."
+      extraTitle: "Certificate & Languages",
+      extraDesc: "AI Professional Development Program, Software Persona (40 hours, CPD accredited, Oct 2026). Turkish (native), English (B2)."
     },
     contact: {
       title: "Contact Me",
-      subtitle: "Let's collaborate on building highly scalable and robust software.",
+      subtitle: "Feel free to reach out about backend roles or projects.",
       info: "Contact Information",
       sendMessage: "Send Message",
       name: "Name",
@@ -128,8 +136,8 @@ export const translations = {
       messagePlaceholder: "Type your message here",
       sendBtn: "Send",
       sending: "Sending...",
-      success: "Message sent successfully! I will get back to you shortly.",
-      error: "An error occurred. Please try again or email me directly.",
+      success: "Message sent. I'll get back to you soon.",
+      error: "Something went wrong. Please try again or email me directly.",
       emptyFields: "Please fill out all fields."
     },
     footer: "© 2026 Hilmi Tunahan Başar. All rights reserved."
@@ -144,115 +152,123 @@ export const translations = {
       contact: 'İletişim'
     },
     hero: {
-      greeting: "Merhaba, Ben",
+      greeting: "Merhaba, ben",
       name: "Tuna",
-      title: "Backend & Distributed Systems Mühendisi",
-      description: "Yüksek ölçeklenebilir mikroservisler, ileri düzey oyun geliştirme ve modern DevOps süreçlerinde uzmanlaşan Bilgisayar Mühendisliği adayı (2026). Temiz kod (clean code) ve 'pragmatik programcı' felsefesine tutkuyla bağlıyım.",
+      title: "Backend Geliştirici",
+      description: "Isparta Uygulamalı Bilimler Üniversitesi Bilgisayar Mühendisliği son sınıf öğrencisiyim, Şubat 2027'de mezun oluyorum. Çoğunlukla Java ve Spring Boot ile backend yazıyorum. Şu an ErgoSafePartner'da stajyer mühendisim.",
       contactBtn: "İletişim",
       cvBtn: "CV İndir"
     },
     about: {
       title: "Hakkımda",
-      subtitle: "Pragmatik mühendislik ile karmaşık sistem mimarilerini köprülemek.",
-      whoAmI: "Yönetici Özeti ve Felsefe",
-      p1: "Isparta Uygulamalı Bilimler Üniversitesi'nde (2026) Bilgisayar Mühendisliği öğrencisi olarak, Backend Geliştirme, Dağıtık Sistemler ve Mikroservis Mimarisi alanlarında uzmanlaşıyorum. 'Pragmatik Programcı' felsefesini benimseyerek, ölçeklenebilir ve kritik çözümler üretmek için temiz koda, test güdümlü geliştirmeye (TDD) ve sağlam CI/CD süreçlerine odaklanıyorum.",
-      p2: "i2i Systems'daki kurumsal deneyimim, Evrencell adlı ultra düşük gecikmeli, dağıtık Online Charging System projesini kapsamaktadır. Akka'nın Actor modeli, VoltDB ve Kafka kullanarak yüksek verimli telekom altyapısının mimarisine katkıda bulundum ve canlı sunucularda sıfır kesintili (zero-downtime) geçişler gerçekleştirdim. Ayrıca, şu anda Spring Boot, PostgreSQL, Redis ve Docker orkestrasyonu ile mikroservis tabanlı rezervasyon sistemi Tavia'yı geliştiriyorum.",
-      p3: "Backend sistemlerinin ötesinde, uzmanlığım yapay zeka ve simülasyon teknolojilerini de kapsamaktadır. Bunun en iyi örneği, Webots R2025a'da otonom bir drone sürüsünü içeren 'Starling' adlı bitirme projemdir. YOLOv8 bilgisayarlı görü ve dinamik K-Means algoritmalarını entegre ederek, droneların gerçek zamanlı orman yangını tespiti yapmasını sağladım. Bu çok disiplinli yaklaşım, çeşitli teknik alanlarda sağlam mühendislik çözümleri sunmamı sağlıyor."
+      subtitle: "Kısaca ben.",
+      whoAmI: "Kimim",
+      p1: "Isparta Uygulamalı Bilimler Üniversitesi Bilgisayar Mühendisliği son sınıftayım, Şubat 2027'de mezun oluyorum. Daha çok backend tarafında çalışıyorum: Java ve Spring Boot, gerektiğinde Go ve C#/.NET. İzmir'de yaşıyorum, uzaktan çalışmaya da açığım.",
+      p2: "Şu an ErgoSafePartner'da stajyer mühendisim. Endüstriyel forklift güvenlik sistemi ErgoSafe'in web platformunu ağırlıklı olarak ben geliştiriyorum. Daha önce bir yaz i2i Systems'ta staj yaptım; stajyer ekibinin geliştirdiği telekom ücretlendirme sistemi Evrencell'in müşteri self-servis web uygulamasını yazdım.",
+      p3: "Staj dışında Spring Boot mikroservis altyapılı bir kafe SaaS platformu olan Tavia'yı ve bitirme projem Starling'i geliştiriyorum. Starling, Webots'ta orman yangını arayan bir drone sürüsü. İki arkadaşımla birlikte yapay zeka destekli radyoloji asistanı MedicoPilot ile SolveX AI Hackathon 2026'da üçüncü olduk."
     },
     experience: {
       title: "Deneyim",
-      subtitle: "Profesyonel roller ve kurumsal dönüm noktaları.",
+      subtitle: "Şimdiye kadarki stajlarım.",
       roles: [
         {
-          id: "tavia",
-          title: "Uzaktan Backend Geliştirici",
-          company: "Tavia",
-          date: "2025 - Günümüz",
-          description: "Yüksek ölçeklenebilir bir kafe ve restoran rezervasyon backend mimarisi tasarımı.",
+          id: "ergosafe",
+          title: "Stajyer Mühendis",
+          company: "ErgoSafePartner",
+          date: "Eylül 2026 – Aralık 2026",
+          description: "Endüstriyel forklift güvenlik sistemi ErgoSafe'in web platformunun ana geliştiricisiyim.",
           points: [
-            "Servis Orkestrasyonu: Spring Boot üzerinde inşa edilen uygulama, birbirinden bağımsız çalışan (loosely coupled) mikroservislere (Kullanıcı Yönetimi, Rezervasyon Yönetimi, Bildirim Servisi) bölünmüştür. Çevre tutarlılığı (environment consistency) için her servis Docker kullanılarak konteynerleştirilmiştir.",
-            "Veri Katmanı Stratejileri: Kalıcı ilişkisel veriler için PostgreSQL stratejik olarak seçilirken, yüksek frekanslı okuma işlemlerini (örn. masa uygunluk kontrolü) yönetmek ve yanıt sürelerini büyük ölçüde en aza indirmek için geçici bir önbellekleme katmanı olarak Redis uygulandı.",
-            "Olay Güdümlü (Event-Driven) Mimari: Servisler arası asenkron iletişimi yönetmek için ekosisteme Apache Kafka entegre edildi. Bir rezervasyon onaylandığında, Kafka topic'ine bir olay (event) yayınlanır ve bu olay SMS/E-posta onaylarını tetiklemek üzere Bildirim Servisi tarafından tüketilir. Bu ayrıştırılmış yaklaşım darboğazları (bottlenecks) önler ve sistemin genel dayanıklılığını artırır."
+            "Üçüncü parti cihaz sunucusundan gelen verileri canlı video, GPS/RTLS takibi, DMS/ADAS alarmları ve 12'den fazla rapor sayfasına dönüştüren Go (Fiber) backend'i ve Next.js arayüzünü yazdım.",
+            "Oturum yönetiminde kritik bir güvenlik açığı bulup raporladım, yetkisiz veri erişimi sorunlarını düzelttim; Redis ile istek sınırlama, IP kısıtlaması, secret rotasyonu ve iki aşamalı doğrulama ekledim.",
+            "Üçüncü parti yazılım bağımlılığını kaldırmak için yeni bir Java 21 / Spring Boot 4 backend yazıyorum. Müşteri sunucuları için tek komutla çalışan bir kurulum betiği ve GitHub Actions ile CI/CD hattı kurdum.",
+            "YOLOX forklift/insan tespit modeli için CVAT'ta veri hazırladım (yaklaşık 500 görseli yeniden etiketledim), şirketin GPU sunucusunda yerel LLM'leri test ettim."
           ]
         },
         {
           id: "i2i",
           title: "Yazılım Mühendisliği Stajyeri",
           company: "i2i Systems",
-          date: "2024",
-          description: "Telekomünikasyon sektörü için görev kritik, yüksek oranda dağıtık bir Online Charging System (OCS) olan Evrencell'in geliştirilmesi ve bakımı.",
+          date: "Temmuz 2024 – Ağustos 2024",
+          description: "17 kişilik stajyer ekibinin geliştirdiği telekom ücretlendirme sistemi Evrencell üzerinde yaz stajı.",
           points: [
-            "Mimari ve Teknolojiler: Proje, milyonlarca telekomünikasyon işlemini gerçek zamanlı işlemek için ultra düşük gecikmeli, yüksek verimli bir mimari gerektirdi. Geleneksel iş parçacığı (thread) yükü olmadan eşzamanlı, hataya dayanıklı işlemler için Akka (Actor modeli) ve yüksek hızlı işlemsel süreçler için optimize edilmiş bellek içi ilişkisel veritabanı olan VoltDB ile kapsamlı çalışmalar yaptım.",
-            "Mesaj Aracısı ve Önbellekleme: Mikroservisleri ayırmak ve asenkron veri akışını sağlamak için Apache Kafka merkezi olay akışı (event-streaming) omurgası olarak yoğun bir şekilde kullanıldı. Veritabanı yükünü önemli ölçüde azaltmak ve kullanıcı oturum durumları için veri alımını hızlandırmak amacıyla dağıtık bellek içi önbellekleme (in-memory caching) için Hazelcast entegre edildi.",
-            "Kurumsal Çeviklik: Almanya'daki üretim sunucularında canlı geçiş (live migration) sürecine aktif olarak katıldım, gerçek zamanlı trafiği izledim, sıfır kesintili (zero-downtime) dağıtım stratejileri sağladım. Sıkı bir Agile/Scrum çerçevesinde ve Jira takibi ile çalıştım."
+            "Müşteri self-servis web uygulamasını yazdım; giriş, kayıt, şifre sıfırlama ve bakiye ekranlarını ekibin REST API'sine bağladım (Spring Boot, JavaScript).",
+            "Projenin SRS dokümanını bir arkadaşımla birlikte hazırladık.",
+            "Kafka, VoltDB, Hazelcast, Apache Ignite, Akka, Oracle, Log4j ve Swagger üzerine uygulamalı ödevler yaptım."
           ]
         }
       ]
     },
     projects: {
       title: "Projeler",
-      subtitle: "Oyun geliştirme, full-stack ve makine öğrenimi alanındaki teknik girişimler.",
+      subtitle: "Staj dışında geliştirdiklerim.",
       items: [
         {
+          name: "MedicoPilot",
+          type: "Hackathon · Üçüncülük",
+          desc: "Yapay zeka destekli radyoloji asistanı, SolveX AI Hackathon 2026 (3 kişilik ekip).",
+          details: "Hekim onayı zorunlu, iki ajanlı bir hazırla-kontrol et kurgusu: Gemma 4 MR raporunun taslağını yazıyor, Llama 3.3 70B güvenlik açısından kontrol ediyor. Spring Boot, Python AI worker, Kafka, Redis, MongoDB ve React; Docker Compose ile çalışıyor.",
+          url: "https://github.com/tunaBasar/MedicoPilot"
+        },
+        {
+          name: "Tavia",
+          type: "Mikroservis · Java / Spring",
+          desc: "Kafeler için çok kiracılı SaaS platformu.",
+          details: "Java 21, Spring Boot 4 ve Spring Cloud (gateway, discovery, config) ile 12 servis. Servisler Kafka üzerinden haberleşiyor, veri için PostgreSQL ve Redis kullanılıyor. Gemini tabanlı müşteri asistanı, IoT ile makine kontrolü, Next.js yönetim paneli ve Expo mobil uygulaması da var."
+        },
+        {
           name: "Starling",
-          type: "Yapay Zeka ve Simülasyon (Python, YOLOv8, Webots)",
-          desc: "Drone Tabanlı Otonom Orman Yangını Tespiti",
-          details: "YOLOv8 kullanarak ormanlık arazilerde yangın tespiti yapan otonom DJI drone sürüsü Webots R2025a simülasyonu. Dinamik K-Means bölümleme, gerçek zamanlı Yer Kontrol İstasyonu (GCS) telemetrisi ve sağlam sürü navigasyonu için Eklemeli Bozucu Uçuş Modelleri (Additive Disturbance Flight Models) uygular.",
+          type: "Bitirme projesi · Python, Webots",
+          desc: "Orman yangını tespit eden otonom drone sürüsü.",
+          details: "Webots'ta 6 dronluk bir filo. Devriye bölgeleri dinamik K-Means ile bölünüyor, ateş ve duman ayrı bir süreçte YOLOv8 ile tespit ediliyor, bir drone düşerse yedek drone otomatik kalkıyor.",
           url: "https://github.com/tunaBasar/Starling"
         },
         {
           name: "BloodDonationApp",
-          type: "Mobil & Backend",
-          desc: "C# ve .NET Core kullanılarak kan bağışı için tasarlanmış kapsamlı, katmanlı bir mimari platformu.",
-          details: "Çapraz platform (cross-platform) mobil destek için .NET MAUI ile inşa edildi. Entity Framework Core (Code-First) kullanılarak bir MSSQL veritabanı yapılandırıldı ve front-end entegrasyonunu kolaylaştırmak için Swagger (OpenAPI) kullanılarak güçlü bir API dokümantasyonu oluşturuldu.",
+          type: "Mobil & backend · C# / .NET",
+          desc: "Kan bağışı uygulaması, tek başıma geliştirdim.",
+          details: "MSSQL veritabanlı ASP.NET Core API (Entity Framework Core, code-first), .NET MAUI mobil uygulama ve API için Swagger dokümantasyonu.",
           url: "https://github.com/tunaBasar/BloodDonationApp"
         },
         {
           name: "MigrAI",
-          type: "Makine Öğrenimi",
-          desc: "Tepe yırtıcı göç yollarını haritalamak için tahmine dayalı yapay zeka uygulaması.",
-          details: "Çeşitli tepe yırtıcıların hareket modellerini haritalamak ve tahmin etmek için makine öğrenimi algoritmaları ve coğrafi veriler kullanılarak Python'da oluşturuldu.",
+          type: "Makine öğrenimi · Python",
+          desc: "Tepe yırtıcıların göç yollarını tahmin etme.",
+          details: "Coğrafi veriyle eğitilen bir CNN + LSTM modeliyle tepe yırtıcıların hareketlerini tahmin ediyor.",
           url: "https://github.com/tunaBasar/MigrAI"
-        },
-        {
-          name: "MedicoPilot",
-          type: "Hackathon Prototipi",
-          desc: "Solvex AI 2026 için hızlı prototiplenmiş sağlık çözümü.",
-          details: "Rekabetçi bir hackathon ortamında yoğun zaman kısıtlamaları altında çalışan bir sağlık yazılımı projesi.",
-          url: "https://github.com/tunaBasar/MedicoPilot"
         }
       ]
     },
     skills: {
       title: "Yetenekler",
-      subtitle: "Çeşitli alanlardaki teknik yetkinlikler.",
+      subtitle: "Çalıştığım teknolojiler.",
       categories: [
         {
-          name: "Backend & Mikroservisler",
-          items: ["Java", "Spring Boot", "C#", ".NET Core", "Microservices Architecture"]
+          name: "Diller",
+          items: ["Java", "Go", "C#", "Python", "TypeScript / JavaScript", "SQL"]
         },
         {
-          name: "Veritabanları & Önbellekleme",
-          items: ["PostgreSQL", "MSSQL", "Oracle", "MySQL", "Redis", "MongoDB"]
+          name: "Backend & Web",
+          items: ["Spring Boot", "Spring Cloud", "Go / Fiber", "ASP.NET Core", "FastAPI", "Next.js / React", "REST", "JUnit", "Testcontainers"]
         },
         {
-          name: "Mesaj Aracıları & Gridler",
-          items: ["Apache Kafka", "Hazelcast", "Akka", "VoltDB"]
+          name: "Veri & Mesajlaşma",
+          items: ["PostgreSQL", "MySQL", "Redis", "MongoDB", "Oracle", "Apache Kafka", "Flyway"]
         },
         {
-          name: "Oyun Geliştirme",
-          items: ["C++", "Unity", "OOP Tasarım Kalıpları"]
+          name: "Yapay Zeka",
+          items: ["LangChain", "LLM API'leri (Gemini, Claude)", "Yerel LLM'ler", "YOLOv8 / YOLOX", "CVAT"]
         },
         {
-          name: "DevOps & Altyapı",
-          items: ["Docker", "Linux (Ubuntu)", "Git", "Jira", "CI/CD (Netlify)", "Shell Scripting"]
+          name: "Araçlar",
+          items: ["Docker", "GitHub Actions", "Git", "Linux"]
         }
       ],
-      devopsDesc: "DevOps Yetenekleri: İmaj boyutlarını azaltmak için çok aşamalı (multi-stage) yapılarla optimize edilmiş Dockerfile'lar yazma ve çoklu konteyner orkestrasyonu için docker-compose kullanma konusunda yetkin. Linux (Ubuntu) sistem yönetimi, SSH ve otomatik CI/CD dağıtım boru hatları (pipelines) kurma konularında son derece yetenekli."
+      extraTitle: "Sertifika & Diller",
+      extraDesc: "Yapay Zeka Mesleki Gelişim Programı, Software Persona (40 saat, CPD akrediteli, Ekim 2026). Türkçe (ana dil), İngilizce (B2)."
     },
     contact: {
       title: "İletişim",
-      subtitle: "Yüksek ölçeklenebilir ve sağlam yazılımlar inşa etmek için işbirliği yapalım.",
+      subtitle: "Backend pozisyonları ya da projeler için bana yazabilirsiniz.",
       info: "İletişim Bilgileri",
       sendMessage: "Mesaj Gönder",
       name: "İsim",
@@ -263,8 +279,8 @@ export const translations = {
       messagePlaceholder: "Mesajınızı buraya yazın",
       sendBtn: "Gönder",
       sending: "Gönderiliyor...",
-      success: "Mesajınız başarıyla gönderildi! Kısa süre içinde size dönüş yapacağım.",
-      error: "Bir hata oluştu. Lütfen tekrar deneyin veya doğrudan e-posta gönderin.",
+      success: "Mesajınız gönderildi, en kısa sürede dönüş yapacağım.",
+      error: "Bir hata oluştu. Lütfen tekrar deneyin ya da doğrudan e-posta gönderin.",
       emptyFields: "Lütfen tüm alanları doldurun."
     },
     footer: "© 2026 Hilmi Tunahan Başar. Tüm hakları saklıdır."
