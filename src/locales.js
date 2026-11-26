@@ -70,7 +70,8 @@ export const translations = {
           name: "Tavia",
           type: "Microservices · Java / Spring",
           desc: "Multi-tenant SaaS platform for cafés.",
-          details: "12 services built with Java 21, Spring Boot 4 and Spring Cloud (gateway, discovery, config). Services talk over Kafka and use PostgreSQL and Redis. It also has a Gemini-based customer assistant, IoT machine control, a Next.js dashboard and an Expo mobile app."
+          details: "12 services built with Java 21, Spring Boot 4 and Spring Cloud (gateway, discovery, config). Services talk over Kafka and use PostgreSQL and Redis. It also has a Gemini-based customer assistant, IoT machine control, a Next.js dashboard and an Expo mobile app.",
+          url: "https://github.com/tunaBasar/Tavia"
         },
         {
           name: "Starling",
@@ -212,8 +213,9 @@ export const translations = {
         {
           name: "Tavia",
           type: "Mikroservis · Java / Spring",
-          desc: "Kafeler için çok kiracılı SaaS platformu.",
-          details: "Java 21, Spring Boot 4 ve Spring Cloud (gateway, discovery, config) ile 12 servis. Servisler Kafka üzerinden haberleşiyor, veri için PostgreSQL ve Redis kullanılıyor. Gemini tabanlı müşteri asistanı, IoT ile makine kontrolü, Next.js yönetim paneli ve Expo mobil uygulaması da var."
+          desc: "Kafeler için multi-tenant SaaS platformu.",
+          details: "Java 21, Spring Boot 4 ve Spring Cloud (gateway, discovery, config) ile 12 servis. Servisler Kafka üzerinden haberleşiyor, veri için PostgreSQL ve Redis kullanılıyor. Gemini tabanlı müşteri asistanı, IoT ile makine kontrolü, Next.js yönetim paneli ve Expo mobil uygulaması da var.",
+          url: "https://github.com/tunaBasar/Tavia"
         },
         {
           name: "Starling",
